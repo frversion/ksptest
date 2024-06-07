@@ -6,9 +6,8 @@
 *.sln.docstates
 *.vsidx
 
-# VS Code directories
-.vscode/
-.vscode/settings.json
+# VS directories
+.vs/
 
 # Build results
 [Dd]ebug/
@@ -31,7 +30,3 @@ artifacts/
 
 # Auto-generated UI files
 *.designer.cs
-
-# VS Code directories
-.vscode/
-.vscode/settings.json
