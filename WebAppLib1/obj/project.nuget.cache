@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FyENU/d4oSAjxU8zaozc1M93BiZtTumaZnnBl+ud/sopdT6KBXYvGoqmT1xxquYVd70Q4ujnXZtpareeM0lJhA==",
+  "dgSpecHash": "AMZKAIys2GojZr/wbbMsCcGo6Irzt9wDon+V3cJPfzbkUusEoj6Fdkln8a22pMDfHhrAgpLaZt5OKwm4qAEblA==",
   "success": true,
-  "projectFilePath": "C:\\gitrepos\\WebAppLib1\\WebAppLib1\\WebAppLib1.csproj",
+  "projectFilePath": "C:\\newgit\\ksptest\\WebAppLib1\\WebAppLib1\\WebAppLib1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Fer\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.20\\microsoft.entityframeworkcore.7.0.20.nupkg.sha512",
     "C:\\Users\\Fer\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.20\\microsoft.entityframeworkcore.abstractions.7.0.20.nupkg.sha512",

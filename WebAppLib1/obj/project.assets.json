@@ -523,11 +523,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\gitrepos\\WebAppLib1\\WebAppLib1\\WebAppLib1.csproj",
+      "projectUniqueName": "C:\\newgit\\ksptest\\WebAppLib1\\WebAppLib1\\WebAppLib1.csproj",
       "projectName": "WebAppLib1",
-      "projectPath": "C:\\gitrepos\\WebAppLib1\\WebAppLib1\\WebAppLib1.csproj",
+      "projectPath": "C:\\newgit\\ksptest\\WebAppLib1\\WebAppLib1\\WebAppLib1.csproj",
       "packagesPath": "C:\\Users\\Fer\\.nuget\\packages\\",
-      "outputPath": "C:\\gitrepos\\WebAppLib1\\WebAppLib1\\obj\\",
+      "outputPath": "C:\\newgit\\ksptest\\WebAppLib1\\WebAppLib1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Fer\\AppData\\Roaming\\NuGet\\NuGet.Config",
