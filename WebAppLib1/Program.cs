@@ -1,15 +1,55 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using WebAppLib1.Interfaces;
+using WebAppLib1.Models;
+using WebAppLib1.Repository;
+using WebAppLib1.Services;
 
-// Add services to the container.
+public class Startup
+{
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
 
-builder.Services.AddControllers();
+    public IConfiguration Configuration { get; }
 
-var app = builder.Build();
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContext<LibraryContext>(options =>
+            options.UseInMemoryDatabase("LibraryDB"));
 
-// Configure the HTTP request pipeline.
+        services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+        services.AddScoped<ILibroRepository, LibroRepository>();
+        services.AddScoped<IPrestamoRepository, PrestamoRepository>();
 
-app.UseAuthorization();
+        services.AddScoped<IUsuarioService, UsuarioService>();
+        services.AddScoped<ILibroService, LibroService>();
+        services.AddScoped<IPrestamoService, PrestamoService>();
 
-app.MapControllers();
+        services.AddControllers();
+        services.AddSwaggerGen();
+    }
 
-app.Run();
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Library API V1"));
+        }
+
+        app.UseHttpsRedirection();
+        app.UseRouting();
+        app.UseAuthorization();
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
+    }
+}

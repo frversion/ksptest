@@ -27,3 +27,13 @@ C:\gitrepos\WebAppLib1\WebAppLib1\obj\Debug\net7.0\refint\WebAppLib1.dll
 C:\gitrepos\WebAppLib1\WebAppLib1\obj\Debug\net7.0\WebAppLib1.pdb
 C:\gitrepos\WebAppLib1\WebAppLib1\obj\Debug\net7.0\WebAppLib1.genruntimeconfig.cache
 C:\gitrepos\WebAppLib1\WebAppLib1\obj\Debug\net7.0\ref\WebAppLib1.dll
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\obj\Debug\net7.0\WebAppLib1.csproj.AssemblyReference.cache
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\obj\Debug\net7.0\WebAppLib1.GeneratedMSBuildEditorConfig.editorconfig
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\obj\Debug\net7.0\WebAppLib1.AssemblyInfoInputs.cache
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\obj\Debug\net7.0\WebAppLib1.AssemblyInfo.cs
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\obj\Debug\net7.0\WebAppLib1.csproj.CoreCompileInputs.cache
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\obj\Debug\net7.0\WebAppLib1.MvcApplicationPartsAssemblyInfo.cs
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\obj\Debug\net7.0\WebAppLib1.MvcApplicationPartsAssemblyInfo.cache
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\obj\Debug\net7.0\WebAppLib1.dll
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\obj\Debug\net7.0\refint\WebAppLib1.dll
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\obj\Debug\net7.0\WebAppLib1.pdb
