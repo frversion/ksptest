@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebAppLib1.Interfaces;
 using WebAppLib1.Models;
@@ -13,7 +14,7 @@ namespace WebAppLib1.Controllers
 
         public LibroController(ILibroService libroService)
         {
-            libroService = libroService;
+            this.libroService = libroService;
         }
 
         [HttpGet]
@@ -35,6 +36,7 @@ namespace WebAppLib1.Controllers
             return Ok(libro);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult<Libro> CreateLibro(Libro libro)
         {
@@ -43,6 +45,7 @@ namespace WebAppLib1.Controllers
             return CreatedAtAction(nameof(GetLibro), new { id = libro.Id }, libro);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult UpdateLibro(int id, Libro libro)
         {
@@ -55,6 +58,7 @@ namespace WebAppLib1.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult DeleteLibro(int id)
         {

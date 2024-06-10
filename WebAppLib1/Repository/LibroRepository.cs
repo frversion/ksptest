@@ -27,7 +27,7 @@ namespace WebAppLib1.Repository
             var libro = context.Libros.Find(id);
 
             // Validar que exista el libro, y que no esté pendiente de devolver en algún prestamo
-            if (libro != null && context.Prestamos.Any(p => p.LibroId == id && !p.YaDevuelto)) 
+            if (libro != null && !context.Prestamos.Any(p => p.LibroId == id && !p.YaDevuelto)) 
             {
                 context.Libros.Remove(libro);
                 context.SaveChanges();

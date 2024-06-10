@@ -9,6 +9,6 @@
         public string AnioPublicacion { get; set; }
         public int Copias { get; set; }
 
-        public ICollection<Prestamo> Prestamos { get; set; }
+        public ICollection<Prestamo>? Prestamos { get; set; }
     }
 }

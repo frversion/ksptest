@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebAppLib1.Interfaces;
 using WebAppLib1.Models;
 
 namespace WebAppLib1.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class PrestamoController : ControllerBase

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using WebAppLib1.Interfaces;
 using WebAppLib1.Models;
+using WebAppLib1.Repository;
 
 namespace WebAppLib1.Services
 {
@@ -15,27 +16,37 @@ namespace WebAppLib1.Services
 
         public void AddLibro(Libro libro)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(libro.Titulo) || libro.Copias < 0)
+            {
+                throw new ArgumentException("El título no puede estar vacío y las copias no pueden ser negativas.");
+            }
+
+            libroRepository.Add(libro);
         }
 
         public void DeleteLibro(int id)
         {
-            throw new NotImplementedException();
+            libroRepository.Delete(id);
         }
 
         public IEnumerable<Libro> GetAllLibros()
         {
-            throw new NotImplementedException();
+            return libroRepository.GetAll();
         }
 
         public Libro GetLibroById(int id)
         {
-            throw new NotImplementedException();
+            return libroRepository.GetById(id);
         }
 
         public void UpdateLibro(Libro libro)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(libro.Titulo) || libro.Copias < 0)
+            {
+                throw new ArgumentException("El título no puede estar vacío y las copias no pueden ser negativas.");
+            }
+
+            libroRepository.Update(libro);
         }
     }
 }

@@ -10,5 +10,6 @@ namespace WebAppLib1.Interfaces
         void AddUsuario(Usuario usuario);
         void UpdateUsuario(Usuario usuario);
         void DeleteUsuario(int id);
+        bool ValidateUsuario(string email, string pwd);
     }
 }
