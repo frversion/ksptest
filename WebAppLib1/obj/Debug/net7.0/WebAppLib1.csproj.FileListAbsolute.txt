@@ -75,3 +75,9 @@ C:\newgit\ksptest\WebAppLib1\WebAppLib1\bin\Debug\net7.0\Microsoft.AspNetCore.Js
 C:\newgit\ksptest\WebAppLib1\WebAppLib1\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\newgit\ksptest\WebAppLib1\WebAppLib1\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\newgit\ksptest\WebAppLib1\WebAppLib1\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\bin\Debug\net7.0\Castle.Core.dll
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\bin\Debug\net7.0\Moq.dll
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\bin\Debug\net7.0\xunit.abstractions.dll
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\bin\Debug\net7.0\xunit.assert.dll
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\bin\Debug\net7.0\xunit.core.dll
+C:\newgit\ksptest\WebAppLib1\WebAppLib1\bin\Debug\net7.0\xunit.execution.dotnet.dll

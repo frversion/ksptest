@@ -9,7 +9,7 @@
         public DateTime? FechaDevolucion { get; set; }
         public Boolean YaDevuelto { get; set; }
 
-        public Usuario Usuario { get; set; }
-        public Libro Libro { get; set; }
+        public Usuario? Usuario { get; set; }
+        public Libro? Libro { get; set; }
     }
 }

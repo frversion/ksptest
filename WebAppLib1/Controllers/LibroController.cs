@@ -6,6 +6,7 @@ using WebAppLib1.Models;
 
 namespace WebAppLib1.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class LibroController : ControllerBase
@@ -17,6 +18,7 @@ namespace WebAppLib1.Controllers
             this.libroService = libroService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<Libro>> GetLibros()
         {
@@ -55,7 +57,7 @@ namespace WebAppLib1.Controllers
             }
 
             libroService.UpdateLibro(libro);
-            return NoContent();
+            return Ok(libro);
         }
 
         [Authorize]
@@ -63,7 +65,7 @@ namespace WebAppLib1.Controllers
         public IActionResult DeleteLibro(int id)
         {
             libroService.DeleteLibro(id);
-            return NoContent();
+            return Ok(id);
         }
     }
 }
