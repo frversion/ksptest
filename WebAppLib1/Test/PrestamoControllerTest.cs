@@ -56,9 +56,15 @@ namespace WebAppLib1.Test
         [Fact]
         public void PrestarLibro_ReturnsBadRequest_CuandoLibroNoEstaDisponible()
         {
-            mockPrestamoService.Setup(service => service.PrestarLibro(It.IsAny<int>(), It.IsAny<int>())).Throws(new InvalidOperationException("El libro no existe o no hay copias disponibles."));
+            var prestamoParams = new PrestamoParams
+            {
+                UserId = 1,
+                LibroId = 1
+            };
 
-            var result = controller.PrestarLibro(1, 1);
+            mockPrestamoService.Setup(service => service.PrestarLibro(It.IsAny<PrestamoParams>())).Throws(new InvalidOperationException("El libro no existe o no hay copias disponibles."));
+
+            var result = controller.PrestarLibro(prestamoParams);
 
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.Equal("El libro no existe o no hay copias disponibles.", badRequestResult.Value);
@@ -67,9 +73,14 @@ namespace WebAppLib1.Test
         [Fact]
         public void PrestarLibro_ReturnsOkResult()
         {
-            mockPrestamoService.Setup(service => service.PrestarLibro(It.IsAny<int>(), It.IsAny<int>())).Verifiable();
+            var prestamoParams = new PrestamoParams
+            {
+                UserId = 1,
+                LibroId = 1
+            };
+            mockPrestamoService.Setup(service => service.PrestarLibro(It.IsAny<PrestamoParams>())).Verifiable();
 
-            var result = controller.PrestarLibro(1, 1);
+            var result = controller.PrestarLibro(prestamoParams);
 
             Assert.IsType<OkResult>(result);
         }

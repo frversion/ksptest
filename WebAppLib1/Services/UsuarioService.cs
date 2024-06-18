@@ -6,57 +6,84 @@ using WebAppLib1.Models;
 
 namespace WebAppLib1.Services
 {
+    /// <summary>
+    /// Clase servicio para usuario.
+    /// </summary>
     public class UsuarioService : IUsuarioService
     {
         private readonly IUsuarioRepository usuarioRepository;
 
+        /// <summary>
+        /// Constructor para la coase.
+        /// </summary>
+        /// <param name="usuarioRepository">Parametro de constructor objeto usuario.</param>
         public UsuarioService(IUsuarioRepository usuarioRepository)
         {
             this.usuarioRepository = usuarioRepository;
         }
 
-        public void AddUsuario(Usuario usuario)
+        /// <summary>
+        /// Operacion de agregar usuario.
+        /// </summary>
+        /// <param name="usuario">Objeto usuario a agregar.</param>
+        /// <returns>Tipo ApiResponse con informacion extendida sobre la operacion ejecutada.</returns>
+        public ApiResponse AddUsuario(Usuario usuario)
         {
-            if (string.IsNullOrEmpty(usuario.Username) || string.IsNullOrEmpty(usuario.Email) || string.IsNullOrEmpty(usuario.Password))
-            {
-                throw new ArgumentException("Todos los campos son obligatorios.");
-            }
-
-            usuarioRepository.Add(usuario);
+            return usuarioRepository.Add(usuario);
         }
 
-        public void DeleteUsuario(int id)
+        /// <summary>
+        /// Operacion de eliminar usuario.
+        /// </summary>
+        /// <param name="id">Identificador de usuario a eliminar.</param>
+        /// <returns>Tipo ApiResponse con informacion extendida sobre la operacion ejecutada.</returns>
+        public ApiResponse DeleteUsuario(int id)
         {
-            usuarioRepository.Delete(id);
+            return usuarioRepository.Delete(id);
         }
 
+        /// <summary>
+        /// Operacion de obtener todos los usuarios disponibles.
+        /// </summary>
+        /// <returns>Lista de objetos usuarios disponibles.</returns>
         public IEnumerable<Usuario> GetAllUsuarios()
         {
             return usuarioRepository.GetAll();
         }
 
-        public Usuario GetUsuarioById(int id)
+        /// <summary>
+        /// Operacion de obtener el usuario especifico.
+        /// </summary>
+        /// <param name="id">Numero de identificador de usuario a devolver.</param>
+        /// <returns>Objeto usuario que coincida con el criterio especificado.</returns>
+        public Usuario? GetUsuarioById(int id)
         {
             return usuarioRepository.GetById(id);
         }
 
-        public void UpdateUsuario(Usuario usuario)
+        /// <summary>
+        /// Operacion de actualizar el usuario especificado.
+        /// </summary>
+        /// <param name="usuario">Objeto de usuario a ser modificado.</param>
+        /// <returns>Tipo ApiResponse con informacion extendida sobre la operacion ejecutada.</returns>
+        public ApiResponse UpdateUsuario(Usuario usuario)
         {
-            if (string.IsNullOrEmpty(usuario.Username) || string.IsNullOrEmpty(usuario.Email) || string.IsNullOrEmpty(usuario.Password))
-            {
-                throw new ArgumentException("Todos los campos son obligatorios.");
-            }
-
-            usuarioRepository.Update(usuario);
+            return usuarioRepository.Update(usuario);
         }
 
+        /// <summary>
+        /// Metodo que valida que el email y password coincida con alguno registrado en la BD.
+        /// </summary>
+        /// <param name="email">Email asociado al usuario.</param>
+        /// <param name="password">Password asociado al usuario.</param>
+        /// <returns>El email coincide o no con el password especificado.</returns>
         public bool ValidateUsuario(string email, string password)
         {
             var user = usuarioRepository.GetAll().FirstOrDefault(u => u.Email == email);
 
             if (user == null)
             {
-                return false;
+                throw new ArgumentException($"El usuario con el email {email} no existe.");
             }
 
             using (var sha = SHA256.Create())

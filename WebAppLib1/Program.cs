@@ -89,6 +89,9 @@ public class Startup
             }
             );
 
+        // CORS - Allow calling the API from WebBrowsers
+        services.AddCors();
+        
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Library API", Version = "v1" });
@@ -127,6 +130,14 @@ public class Startup
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.UseCors(x => x
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+           .AllowCredentials()
+           //.WithOrigins("https://localhost:44351")); // Allow only this origin can also have multiple origins seperated with comma
+           .SetIsOriginAllowed(origin => true));// Allow any origin  
+
         //app.UseEndpoints(endpoints =>
         //{
         //    endpoints.MapControllers();

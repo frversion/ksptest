@@ -6,8 +6,15 @@ using WebAppLib1.Models;
 
 namespace WebAppLib1.DB
 {
+    /// <summary>
+    /// Clase que inicializa los valores in-memory
+    /// </summary>
     public static class DBInitializer
     {
+        /// <summary>
+        /// Clase estatica que iniciaza valores por cada objeto del modelo.
+        /// </summary>
+        /// <param name="context"></param>
         public static void Initialize(LibraryContext context)
         {
             // Si ya hay datos, salir

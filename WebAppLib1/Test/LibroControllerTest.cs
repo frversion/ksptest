@@ -43,7 +43,7 @@ namespace WebAppLib1.Test
         [Fact]
         public void GetLibro_ReturnsOkResult_ConLibro()
         {
-            var libro = new Libro { Id = 1, Titulo = "Test" };
+            var libro = new Libro { Id = 1, Titulo = "Test", Autor = "Señor Paul", AnioPublicacion = "1965", Categoria = "XMen", Copias = 3 };
             mockLibroService.Setup(service => service.GetLibroById(It.IsAny<int>())).Returns(libro);
 
             var result = controller.GetLibro(1);
