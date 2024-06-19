@@ -38,7 +38,14 @@ namespace WebAppLib1.Repository
         /// <returns>Lista de objetos tipo Prestamo.</returns>
         public IEnumerable<Prestamo> GetAll()
         {
-            return context.Prestamos.Include(p => p.Usuario).Include(p => p.Libro).ToList();
+            try
+            {
+                return context.Prestamos.Include(p => p.Usuario).Include(p => p.Libro).ToList();
+            }
+            catch
+            {
+                return new List<Prestamo>();
+            }
         }
 
         /// <summary>
@@ -46,9 +53,16 @@ namespace WebAppLib1.Repository
         /// </summary>
         /// <param name="id">Valor del id del prestamo a recuperar.</param>
         /// <returns>Objeto prestamo que conicida con el criterio especificado.</returns>
-        public Prestamo GetById(int id)
+        public Prestamo? GetById(int id)
         {
-            return context.Prestamos.Include(p => p.Usuario).Include(p => p.Libro).FirstOrDefault(p => p.Id == id);
+            try
+            {
+                return context.Prestamos.Include(p => p.Usuario).Include(p => p.Libro).FirstOrDefault(p => p.Id == id);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>

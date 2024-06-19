@@ -20,7 +20,7 @@
         /// </summary>
         /// <param name="id">Valor del id del prestamo a recuperar.</param>
         /// <returns>Objeto prestamo que conicida con el criterio especificado.</returns>
-        Prestamo GetById(int id);
+        Prestamo? GetById(int id);
 
         /// <summary>
         /// Metodo agregar prestamo.

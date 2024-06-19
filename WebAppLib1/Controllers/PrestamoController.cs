@@ -9,7 +9,7 @@ namespace WebAppLib1.Controllers
     /// <summary>
     /// Clase controller para prestamo.
     /// </summary>
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class PrestamoController : ControllerBase
@@ -32,7 +32,14 @@ namespace WebAppLib1.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Prestamo>> GetPrestamos()
         {
-            return Ok(prestamoService.GetAllPrestamos());
+            var prestamos = prestamoService.GetAllPrestamos();
+
+            if (!prestamos.Any())
+            {
+                return Ok(new ApiResponse { IsSuccess = false, ResultMessage = "La consulta no devolvio resultados" });
+            }
+
+            return Ok(prestamos);
         }
 
         /// <summary>
@@ -47,11 +54,13 @@ namespace WebAppLib1.Controllers
 
             if (prestamo == null)
             {
-                return NotFound();
+                return Ok(new ApiResponse { IsSuccess = false, ResultMessage = "La consulta no devolvio resultados." });
+                //return NotFound();
             }
 
             return Ok(prestamo);
         }
+
         /// <summary>
         /// Operacion API: Prestamo de un libro.
         /// </summary>
@@ -61,15 +70,7 @@ namespace WebAppLib1.Controllers
         [HttpPost]
         public IActionResult PrestarLibro(PrestamoParams prestamoParams)
         {
-            try
-            {
-                prestamoService.PrestarLibro(prestamoParams);
-                return Ok();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(prestamoService.PrestarLibro(prestamoParams));
         }
         /// <summary>
         /// Operacion API: Devolucion de un libro.
@@ -79,15 +80,7 @@ namespace WebAppLib1.Controllers
         [HttpPost("devolver/{prestamoId}")]
         public IActionResult DevolverLibro(int prestamoId)
         {
-            try
-            {
-                prestamoService.DevolverLibro(prestamoId);
-                return Ok();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(prestamoService.DevolverLibro(prestamoId));
         }
     }
 }

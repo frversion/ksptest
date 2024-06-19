@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import bookService from '../../services/bookService';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { Alert } from 'react-bootstrap';
 
 const EditBook = () => {
+    const navigate = useNavigate();
+    const auth = localStorage.getItem("token");
+    if (!auth) {
+        navigate("/login");
+    } 
     const [bookid, setId] = useState('');
     const [titulo, setTitulo] = useState('');
     const [autor, setAutor] = useState('');
@@ -10,7 +18,10 @@ const EditBook = () => {
     const [anioPublicacion, setAnioPublicacion] = useState('');
     const [copias, setCopias] = useState('');
     const { id } = useParams();
-    const navigate = useNavigate();
+
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
 
     useEffect(() => {
         const fetchBook = async () => {
@@ -31,37 +42,71 @@ const EditBook = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await bookService.editBook(id, { id, titulo, autor, categoria, anioPublicacion, copias: parseInt(copias) });
-        // TODO: Agregar un mensaje de exito
-        navigate('/books');
+
+        setError('');
+        setSuccess('');
+
+        if (!titulo || !autor || !copias || !categoria || !anioPublicacion) {
+            setError('Todos los campos son obligatorios.');
+            return;
+        }
+
+        if (isNaN(anioPublicacion) || anioPublicacion < 1500 || anioPublicacion > 2024) {
+            setError('El campo "Anio publicacion" debe ser un numero entero positivo entre 1500 y 2024.');
+            return;
+        }
+
+        if (isNaN(copias) || copias < 0) {
+            setError('El campo "copias" debe ser un numero entero positivo igual o mayor a cero.');
+            return;
+        }
+
+        try {
+            const response = await bookService.editBook(id, { id, titulo, autor, categoria, anioPublicacion, copias: parseInt(copias) }, auth);
+
+            if (response.isSuccess) {
+                setSuccess(response.resultMessage);
+                setTimeout(() => {
+                    navigate('/BookList'); // Redirect to the book list
+                }, 2000);
+            }
+            else {
+                setError(response.errorMessage || "Ocurrio un error.");
+            }
+        }
+        catch (err) {
+            setError(err.Message)
+        }
+
+    };
+
+    const handleCancel = () => {
+        navigate('/BookList');
     };
 
     return (
-        <div style={{ padding: '20px' }}>
-            <h2>Edit Book</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Titulo:</label>
-                    <input type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)} required />
-                </div>
-                <div>
-                    <label>Autor:</label>
-                    <input type="text" value={autor} onChange={(e) => setAutor(e.target.value)} required />
-                </div>
-                <div>
-                    <label>Categoria:</label>
-                    <input type="text" value={categoria} onChange={(e) => setCategoria(e.target.value)} required />
-                </div>
-                <div>
-                    <label>Anio de Publicacion:</label>
-                    <input type="text" value={anioPublicacion} onChange={(e) => setAnioPublicacion(e.target.value)} required />
-                </div>
-                <div>
-                    <label>Copias:</label>
-                    <input type="number" value={copias} onChange={(e) => setCopias(e.target.value)} required />
-                </div>
-                <button type="submit">Save</button>
-            </form>
+        <div>
+            {error && <Alert variant="danger">{error}</Alert>}
+            {success && <Alert variant="success">{success}</Alert>}
+        <form onSubmit={handleSubmit}>
+            <Form>
+                <Form.Group className="mb-3" controlId="FormAddBook.ControlInput1">
+                    <Form.Label>Titulo</Form.Label>
+                    <Form.Control type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)} required autoFocus />
+                    <Form.Label>Autor</Form.Label>
+                    <Form.Control type="text" value={autor} onChange={(e) => setAutor(e.target.value)} required />
+                    <Form.Label>Categor&iacute;a</Form.Label>
+                    <Form.Control type="text" value={categoria} onChange={(e) => setCategoria(e.target.value)} required />
+                    <Form.Label>A&ntilde;o Publicacion</Form.Label>
+                    <Form.Control type="text" value={anioPublicacion} onChange={(e) => setAnioPublicacion(e.target.value)} required />
+                    <Form.Label>Copias</Form.Label>
+                    <Form.Control type="text" value={copias} onChange={(e) => setCopias(e.target.value)} required />
+                </Form.Group>
+            </Form>
+            <Button variant="primary" type="button" onClick={handleCancel}>Cancelar</Button>
+                &nbsp;
+            <Button variant="primary" type="submit">Guardar</Button>
+        </form>
         </div>
     );
 };

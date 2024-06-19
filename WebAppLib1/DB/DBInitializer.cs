@@ -25,9 +25,9 @@ namespace WebAppLib1.DB
 
             var usuarios = new Usuario[]
             {
-            new Usuario { Username = "Fer R", Email = "fer@ksp.com", Password = "Password123!" },
-            new Usuario { Username = "Leo G", Email = "leo@ksp.com", Password = "Password12345!" },
-            new Usuario { Username = "Hector H", Email = "hector@ksp.com", Password = "Password123!" }
+            new Usuario { Username = "Fer R", Email = "fer@ksp.com", Password = "p123" },
+            new Usuario { Username = "Leo G", Email = "leo@ksp.com", Password = "p1234" },
+            new Usuario { Username = "Hector H", Email = "hector@ksp.com", Password = "p12345" }
             };
 
             foreach (var u in usuarios)

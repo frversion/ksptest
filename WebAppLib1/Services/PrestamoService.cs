@@ -28,26 +28,35 @@ namespace WebAppLib1.Services
         /// Operacion de devolver libro en prestamo.
         /// </summary>
         /// <param name="prestamoId"></param>
-        /// <exception cref="InvalidOperationException">En caso de excepcion, se devuelve el texto del error al caller.</exception>
-        public void DevolverLibro(int prestamoId)
+        /// <returns>Tipo ApiResponse con informacion extendida sobre la operacion ejecutada.</returns>
+        public ApiResponse DevolverLibro(int prestamoId)
         {
-            var prestamo = prestamoRepository.GetById(prestamoId);
-
-            if (prestamo == null || prestamo.YaDevuelto)
+            try
             {
-                throw new InvalidOperationException("El préstamo no existe o ya ha sido devuelto.");
-            }
+                var prestamo = prestamoRepository.GetById(prestamoId);
 
-            var libro = libroRepository.GetById(prestamo.LibroId);
-            if (libro != null)
+                if (prestamo == null || prestamo.YaDevuelto)
+                {
+                    return new ApiResponse { IsSuccess = false, ResultMessage = "Validacion fallida", ErrorMessage = $"El prestamo con Id {prestamoId} no existe o ya ha sido devuelto." };
+                    //throw new InvalidOperationException("El prestamo no existe o ya ha sido devuelto.");
+                }
+
+                var libro = libroRepository.GetById(prestamo.LibroId);
+                if (libro != null)
+                {
+                    libro.Copias++;
+                    libroRepository.Update(libro);
+                }
+
+                prestamo.YaDevuelto = true;
+                prestamo.FechaDevolucion = DateTime.Now;
+                prestamoRepository.Update(prestamo);
+                return new ApiResponse { IsSuccess = true, ResultMessage = $"El prestamo con Id {prestamoId} fue devuelto exitosamente." };
+            }
+            catch (Exception ex)
             {
-                libro.Copias++;
-                libroRepository.Update(libro);
+                return new ApiResponse { IsSuccess = false, ResultMessage = $"Error al intentar devolver el prestamo con Id {prestamoId}.", ErrorMessage = ex.Message };
             }
-
-            prestamo.YaDevuelto = true;
-            prestamo.FechaDevolucion = DateTime.Now;
-            prestamoRepository.Update(prestamo);
         }
 
         /// <summary>
@@ -64,7 +73,7 @@ namespace WebAppLib1.Services
         /// </summary>
         /// <param name="id">Numero de identificador de prestamo a devolver.</param>
         /// <returns>Objeto prestamo que coincida con el criterio especificado.</returns>
-        public Prestamo GetPrestamoById(int id)
+        public Prestamo? GetPrestamoById(int id)
         {
             return prestamoRepository.GetById(id);
         }
@@ -74,27 +83,36 @@ namespace WebAppLib1.Services
         /// </summary>
         /// <param name="userId">Id de usuario quien solicita el prestamo.</param>
         /// <param name="libroId">Id de libro que se esta solicitando.</param>
-        /// <exception cref="InvalidOperationException">En caso de excepcion, se devuelve el texto del error al caller.</exception>
-        public void PrestarLibro(PrestamoParams prestamoParams)
+        /// <returns>Tipo ApiResponse con informacion extendida sobre la operacion ejecutada.</returns>
+        public ApiResponse PrestarLibro(PrestamoParams prestamoParams)
         {
-            var libro = libroRepository.GetById(prestamoParams.LibroId);
-
-            if (libro == null || libro.Copias == 0)
+            try
             {
-                throw new InvalidOperationException("El libro no existe o no hay copias disponibles.");
+                var libro = libroRepository.GetById(prestamoParams.LibroId);
+
+                if (libro == null || libro.Copias == 0)
+                {
+                    return new ApiResponse { IsSuccess = false, ResultMessage = "Validacion fallida", ErrorMessage = "El libro no existe o no hay copias dispnibles" };
+                    //throw new InvalidOperationException("El libro no existe o no hay copias disponibles.");
+                }
+
+                var prestamo = new Prestamo
+                {
+                    UserId = prestamoParams.UserId,
+                    LibroId = prestamoParams.LibroId,
+                    FechaPrestamo = DateTime.Now,
+                    YaDevuelto = false
+                };
+
+                libro.Copias--;
+                libroRepository.Update(libro);
+                prestamoRepository.Add(prestamo);
+                return new ApiResponse { IsSuccess = true, ResultMessage = $"El prestamo fue creado exitosamente." };
             }
-
-            var prestamo = new Prestamo
+            catch (Exception ex)
             {
-                UserId = prestamoParams.UserId,
-                LibroId = prestamoParams.LibroId,
-                FechaPrestamo = DateTime.Now,
-                YaDevuelto = false
-            };
-
-            libro.Copias--;
-            libroRepository.Update(libro);
-            prestamoRepository.Add(prestamo);
+                return new ApiResponse { IsSuccess = false, ResultMessage = $"Error al intentar crear el prestamo.", ErrorMessage = ex.Message };
+            }
         }
     }
 }

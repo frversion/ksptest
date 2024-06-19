@@ -9,10 +9,6 @@ var config = {
     }
 }
 
-//String.prototype.replaceInMyHeader = function (find, replace) {
-//    return find.split(replace).flatMap((i) => [i, replace]).slice(0, -1);
-//}
-
 const getBooks = async () => {
     try {
         const response = await axios.get(API_URL);
@@ -54,18 +50,20 @@ const getBooks = async () => {
     
 };
 
-const editBook = async (id, book) => {
+const editBook = async (id, book, token) => {
+    setAuthToken(`Bearer ${token}`);
     const response = await axios.put(`${API_URL}/${id}`, book, config);
     return response.data;
 };
 
-const deleteBook = async (id) => {
-    try {
+const deleteBook = async (id, token) => {
+    //try {
+        setAuthToken(`Bearer ${token}`);
         const response = await axios.delete(`${API_URL}/${id}`);
         return response.data;
-    } catch (error) {
-        handleError(error);
-    }
+    //} catch (error) {
+    //    handleError(error);
+    //}
 };
 
 const handleError = (error) => {

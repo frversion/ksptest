@@ -15,6 +15,7 @@ const Login = () => {
             const token = await authService.login(email, password );
             setAuth(token);
             navigate('/books');
+            localStorage.setItem('token', token)
         } catch (error) {
             console.error('Login failed', error);
         }

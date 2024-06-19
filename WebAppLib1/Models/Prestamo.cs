@@ -24,12 +24,19 @@
         /// Fecha en que se presto el libro.
         /// </summary>
         public DateTime FechaPrestamo { get; set; }
-        
+
+        /// <summary>
+        /// Fecha en que se presto el libro, con formato (solo lectura).
+        /// </summary>
+        public string FechaPrestamoFormat => FechaPrestamo.ToString("dd/MM/yyyy hh:mm"); 
+
         /// <summary>
         /// Fecha en que se devolvió el libro.
         /// </summary>
         public DateTime? FechaDevolucion { get; set; }
-        
+
+        public string? FechaDevolucionFormat => FechaDevolucion?.ToString("dd/MM/yyyy hh:mm");
+
         /// <summary>
         /// Bandera que indica si el libro ya se devolvió.
         /// </summary>

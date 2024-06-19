@@ -19,20 +19,20 @@ namespace WebAppLib1.Interfaces
         /// </summary>
         /// <param name="id">Numero de identificador de prestamo a devolver.</param>
         /// <returns>Objeto prestamo que coincida con el criterio especificado.</returns>
-        Prestamo GetPrestamoById(int id);
+        Prestamo? GetPrestamoById(int id);
 
         /// <summary>
         /// Operacion prestamo de libro.
         /// </summary>
         /// <param name="prestamoParams">Entidad que contiene el userId y libroId, que corresponde al usuario que solicita el prestamo y el libro solicitado.</param>
-        /// <exception cref="InvalidOperationException">En caso de excepcion, se devuelve el texto del error al caller.</exception>
-        void PrestarLibro(PrestamoParams prestamoParams);
+        /// <returns>Tipo ApiResponse con informacion extendida sobre la operacion ejecutada.</returns>
+        ApiResponse PrestarLibro(PrestamoParams prestamoParams);
 
         /// <summary>
         /// Operacion de devolver libro en prestamo.
         /// </summary>
         /// <param name="prestamoId"></param>
-        /// <exception cref="InvalidOperationException">En caso de excepcion, se devuelve el texto del error al caller.</exception>
-        void DevolverLibro(int prestamoId);
+        /// <returns>Tipo ApiResponse con informacion extendida sobre la operacion ejecutada.</returns>
+        ApiResponse DevolverLibro(int prestamoId);
     }
 }
