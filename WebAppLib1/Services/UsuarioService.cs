@@ -90,7 +90,14 @@ namespace WebAppLib1.Services
             using (var sha = SHA256.Create())
             {
                 var hashedpwd = Convert.ToBase64String(sha.ComputeHash(Encoding.UTF8.GetBytes(password)));
-                return new ApiResponse { IsSuccess = true, ResultMessage = "Usuario autenticado con exito.", ResultObject = Convert.ToBase64String(sha.ComputeHash(Encoding.UTF8.GetBytes(user.Password))) == hashedpwd };
+                if (Convert.ToBase64String(sha.ComputeHash(Encoding.UTF8.GetBytes(user.Password))) == hashedpwd)
+                {
+                    return new ApiResponse { IsSuccess = true, ResultMessage = "Usuario autenticado con exito." };
+                }
+                else
+                {
+                    return new ApiResponse { IsSuccess = false, ResultMessage = "No fue posible autenticar al usuario." };
+                }
             }
         }
     }
