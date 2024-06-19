@@ -1,0 +1,96 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import bookService from '../../services/bookService';
+import { useAuth } from '../../context/AuthProvider';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { Alert } from 'react-bootstrap';
+
+const AddBook = () => {
+    const navigate = useNavigate();
+    const auth = localStorage.getItem("token");
+
+    if (!auth) {
+        navigate("/login");
+    } 
+
+    const [titulo, setTitulo] = useState('');
+    const [autor, setAutor] = useState('');
+    const [copias, setCopias] = useState('');
+    const [categoria, setCategoria] = useState('');
+    const [anioPublicacion, setAnioPublicacion] = useState('');
+
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        setError('');
+        setSuccess('');
+
+        if (!titulo || !autor || !copias || !categoria || !anioPublicacion) {
+            setError('Todos los campos son obligatorios.');
+            return;
+        }
+
+        if (isNaN(anioPublicacion) || anioPublicacion < 1500 || anioPublicacion > 2024) {
+            setError('El campo "Anio publicacion" debe ser un numero entero positivo entre 1500 y 2024.');
+            return;
+        }
+
+        if (isNaN(copias) || copias < 0) {
+            setError('El campo "copias" debe ser un numero entero positivo igual o mayor a cero.');
+            return;
+        }
+
+        try {
+            const response = await bookService.addBook({ titulo, autor, categoria, anioPublicacion, copias: parseInt(copias) }, auth);
+
+            if (response.isSuccess) {
+                setSuccess(response.resultMessage);
+                setTimeout(() => {
+                    navigate('/BookList'); // Redirect to the book list
+                }, 2000);
+            }
+            else {
+                setError(response.errorMessage || "Ocurrio un error.");
+            }
+        }
+        catch (err) {
+            setError(err.Message)
+        }
+    };
+
+    const handleCancel = () => {
+        navigate('/BookList');
+    };
+
+    return (
+       <div>
+            {error && <Alert variant="danger">{error}</Alert>}
+            {success && <Alert variant="success">{success}</Alert>}
+       <form onSubmit={handleSubmit}>
+          <Form>
+            <Form.Group className="mb-3" controlId="FormAddBook.ControlInput1">
+              <Form.Label>Titulo</Form.Label>
+                <Form.Control type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)} required autoFocus />
+              <Form.Label>Autor</Form.Label>
+                <Form.Control type="text" value={autor} onChange={(e) => setAutor(e.target.value)} required />
+              <Form.Label>Categor&iacute;a</Form.Label>
+                <Form.Control type="text" value={categoria} onChange={(e) => setCategoria(e.target.value)} required />
+              <Form.Label>A&ntilde;o Publicacion</Form.Label>
+                <Form.Control type="text" value={anioPublicacion} onChange={(e) => setAnioPublicacion(e.target.value)} required />
+              <Form.Label>Copias</Form.Label>
+                <Form.Control type="text" value={copias} onChange={(e) => setCopias(e.target.value)} required />
+            </Form.Group>
+          </Form>
+            <Button variant="primary" type="button" onClick={handleCancel}>Cancelar</Button>
+                &nbsp;
+            <Button variant="primary" type="submit">Guardar</Button>
+        </form>
+        </div>
+    );
+};
+
+export default AddBook;
