@@ -19,6 +19,12 @@ const LoanList = () => {
     //const { auth } = useAuth();
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
         const fetchLoans = async () => {
             const loans = await loanService.getLoans();
             setLoans(loans);

@@ -82,7 +82,7 @@ namespace WebAppLib1.Repository
 
                 context.Usuarios.Remove(usuario);
                 context.SaveChanges();
-                return new ApiResponse { IsSuccess = true, ResultMessage = "El usuario con Id {id} fue eliminado exitosamente." };
+                return new ApiResponse { IsSuccess = true, ResultMessage = $"El usuario con Id {id} fue eliminado exitosamente." };
             }
             catch (Exception ex)
             {

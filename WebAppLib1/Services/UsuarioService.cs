@@ -76,20 +76,21 @@ namespace WebAppLib1.Services
         /// </summary>
         /// <param name="email">Email asociado al usuario.</param>
         /// <param name="password">Password asociado al usuario.</param>
-        /// <returns>El email coincide o no con el password especificado.</returns>
-        public bool ValidateUsuario(string email, string password)
+        /// <returns>Tipo ApiResponse con informacion extendida sobre la operacion ejecutada.</returns>
+        public ApiResponse ValidateUsuario(string email, string password)
         {
             var user = usuarioRepository.GetAll().FirstOrDefault(u => u.Email == email);
 
             if (user == null)
             {
-                throw new ArgumentException($"El usuario con el email {email} no existe.");
+                return new ApiResponse { IsSuccess = false, ResultMessage = "Error en la validacion del usuario.", ErrorMessage = "Credenciales invalidas." };
+                //throw new ArgumentException($"El usuario con el email {email} no existe.");
             }
 
             using (var sha = SHA256.Create())
             {
                 var hashedpwd = Convert.ToBase64String(sha.ComputeHash(Encoding.UTF8.GetBytes(password)));
-                return Convert.ToBase64String(sha.ComputeHash(Encoding.UTF8.GetBytes(user.Password))) == hashedpwd;
+                return new ApiResponse { IsSuccess = true, ResultMessage = "Usuario autenticado con exito.", ResultObject = Convert.ToBase64String(sha.ComputeHash(Encoding.UTF8.GetBytes(user.Password))) == hashedpwd };
             }
         }
     }

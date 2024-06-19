@@ -117,7 +117,8 @@ namespace WebAppLib1.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel model)
         {
-            if (usuarioService.ValidateUsuario(model.Email, model.Password))
+            var result = usuarioService.ValidateUsuario(model.Email, model.Password);
+            if (result.IsSuccess)
             {
                 var claims = new[]
                 {

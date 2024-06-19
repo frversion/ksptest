@@ -48,6 +48,6 @@ namespace WebAppLib1.Interfaces
         /// <param name="email">Email asociado al usuario.</param>
         /// <param name="password">Password asociado al usuario.</param>
         /// <returns>El email coincide o no con el password especificado.</returns>
-        bool ValidateUsuario(string email, string pwd);
+        ApiResponse ValidateUsuario(string email, string pwd);
     }
 }

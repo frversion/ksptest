@@ -3,6 +3,7 @@ import './App.css';
 import React from 'react';
 import { Routes, Route, Link, Navigate } from 'react-router-dom';
 import Login from './components/Login';
+import NavBar from './components/NavBar';
 import BookList from './components/Books/BookList';
 import AddBook from './components/Books/AddBook';
 import EditBook from './components/Books/EditBook';
@@ -32,23 +33,25 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
     return (
         <div className="container">
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/Login">Login</Link>
-                    </li>
-                    <li>
-                        <Link to="/BookList">Libros</Link>
-                    </li>
-                    <li>
-                        <Link to="/UserList">Usuarios</Link>
-                    </li>
-                    <li>
-                        <Link to="/LoanList">Prestamos</Link>
-                    </li>
-                </ul>
-            </nav>
+            {/*<nav>*/}
+            {/*    <ul>*/}
+            {/*        <li>*/}
+            {/*            <Link to="/Login">Login</Link>*/}
+            {/*        </li>*/}
+            {/*        <li>*/}
+            {/*            <Link to="/BookList">Libros</Link>*/}
+            {/*        </li>*/}
+            {/*        <li>*/}
+            {/*            <Link to="/UserList">Usuarios</Link>*/}
+            {/*        </li>*/}
+            {/*        <li>*/}
+            {/*            <Link to="/LoanList">Prestamos</Link>*/}
+            {/*        </li>*/}
+            {/*    </ul>*/}
+            {/*</nav>*/}
             <AuthProvider>
+                <NavBar />
+                <div className="container">
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/BookList" element={<BookList />} />
@@ -62,6 +65,7 @@ const App = () => {
                     <Route path="/LoanList" element={<LoanList />} />
                     <Route path="/AddLoan" element={<AddLoan /> } />
                 </Routes>
+                </div>
             </AuthProvider>
         </div>
     );

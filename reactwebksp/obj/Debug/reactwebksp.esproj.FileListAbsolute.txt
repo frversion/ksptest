@@ -1,2 +1,0 @@
-C:\newgit\ksptest\WebAppLib1\reactwebksp\obj\Debug\reactwebksp.esproj.SuggestedBindingRedirects.cache
-C:\newgit\ksptest\WebAppLib1\reactwebksp\obj\Debug\reactwebksp.esproj.CoreCompileInputs.cache

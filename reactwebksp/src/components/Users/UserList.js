@@ -21,6 +21,12 @@ const UserList = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
         const fetchUsers = async (auth) => {
             var token = "";
             if (!auth) {
