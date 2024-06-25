@@ -12,9 +12,9 @@ namespace WebAppLib1.DB
     public static class DBInitializer
     {
         /// <summary>
-        /// Clase estatica que iniciaza valores por cada objeto del modelo.
+        /// Clase estatica que iniciaza valores por cada objeto del modelo ** ESTOS VALORES NO DEBERIAN CAMBIARSE - SOLO PODRIAN AGREGARSE MAS REGISTROS / SON UTILIZADOS EN UNIT TEST **.
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">Parametro de contexto.</param>
         public static void Initialize(LibraryContext context)
         {
             // Si ya hay datos, salir
@@ -50,9 +50,9 @@ namespace WebAppLib1.DB
 
             var prestamos = new Prestamo[]
             {
-            new Prestamo { UserId = 1, LibroId = 1, FechaPrestamo = DateTime.Now },
-            new Prestamo { UserId = 2, LibroId = 2, FechaPrestamo = DateTime.Now },
-            new Prestamo { UserId = 3, LibroId = 2, FechaPrestamo = DateTime.Now }
+            new Prestamo { UserId = 1, LibroId = 1, FechaPrestamo = DateTime.Now.AddDays(-1) },
+            new Prestamo { UserId = 2, LibroId = 2, FechaPrestamo = DateTime.Now.AddDays(-2) },
+            new Prestamo { UserId = 3, LibroId = 2, FechaPrestamo = DateTime.Now.AddDays(-3) }
             };
 
             foreach (var p in prestamos)

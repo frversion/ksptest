@@ -60,7 +60,8 @@ const UserList = () => {
             if (response.isSuccess) {
                 setSuccess(response.resultMessage);
                 setTimeout(() => {
-                    navigate('/UserList'); // Redirect to the book list
+                    //navigate('/UserList'); // Redirect to the book list
+                    setUsers(users.filter(user => user.id !== id));
                 }, 2000);
             }
             else {
