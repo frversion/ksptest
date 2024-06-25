@@ -41,7 +41,8 @@ const BookList = () => {
             if (response.isSuccess) {
                 setSuccess(response.resultMessage);
                 setTimeout(() => {
-                    navigate('/BookList'); // Redirect to the book list
+                    //navigate('/BookList'); // Redirect to the book list
+                    setBooks(books.filter(book => book.id !== id));
                 }, 2000);
             }
             else {

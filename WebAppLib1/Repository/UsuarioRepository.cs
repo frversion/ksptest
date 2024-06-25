@@ -142,6 +142,13 @@ namespace WebAppLib1.Repository
                     return new ApiResponse { IsSuccess = false, ResultMessage = "Validacion fallida", ErrorMessage = $"No existe un usuario con el Id {usuario.Id}" };
                 }
 
+                // Excluyendo al usuario actual, no debe existir otro con el mismo usuario o correo.
+                if (context.Usuarios.Any(u => u.Id == usuario.Id && (u.Username == usuario.Username || u.Email == usuario.Email)))
+                {
+                    return new ApiResponse { IsSuccess = false, ResultMessage = "Validacion fallida", ErrorMessage = $"El usuario con nombre {usuario.Username} o email {usuario.Email} ya existe." };
+                    //throw new ArgumentException($"El usuario con nombre {usuario.Username} o email {usuario.Email} ya existe.");
+                }
+
                 context.Usuarios.Update(usuario);
                 context.SaveChanges();
                 return new ApiResponse { IsSuccess = true, ResultMessage = "El usuario fue actualizado exitosamente.", ResultObject = usuario };

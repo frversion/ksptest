@@ -15,6 +15,9 @@ const LoanList = () => {
         navigate("/login");
     } 
 
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
     const [loans, setLoans] = useState([]);
     //const { auth } = useAuth();
 
@@ -25,16 +28,51 @@ const LoanList = () => {
             return;
         }
 
-        const fetchLoans = async () => {
+        //const fetchLoans = async () => {
+        //    const loans = await loanService.getLoans();
+        //    setLoans(loans);
+        //};
+
+        //fetchLoans();
+        loadAllLoans();
+    }, []);
+
+    const loadAllLoans = async () => {
+        try {
             const loans = await loanService.getLoans();
             setLoans(loans);
-        };
+        }
+        catch (error) {
+            setError('Error cargando los prestamos.');
+        }
+    }
 
-        fetchLoans();
-    }, []);
+    const handleReturnBook = async (loanId, auth) => {
+        setError('');
+        setSuccess('');
+
+        try {
+            const response = await loanService.returnBook(loanId, auth);
+
+            if (response.isSuccess) {
+                setSuccess(response.resultMessage);
+                setTimeout(() => {
+                    loadAllLoans();
+                }, 2000);
+            }
+            else {
+                setError(response.errorMessage || "Ocurrio un error");
+            }
+        }
+        catch (err) {
+            setError(err.Message);
+        }
+    };
 
     return (
         <div>
+            {error && <Alert variant="danger">{error}</Alert>}
+            {success && <Alert variant="success">{success}</Alert>}
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -64,7 +102,7 @@ const LoanList = () => {
                             <td align="center">{loan.yaDevuelto ? "SI": "NO"}</td>
                             <td align="center">
                                 {!loan.yaDevuelto && (
-                                    <Button variant="outline-danger" size="sm" onClick={() => loanService.returnBook(loan.id, auth)}>Devolver Libro</Button>
+                                    <Button variant="outline-danger" size="sm" onClick={() => handleReturnBook(loan.id, auth)}>Devolver Libro</Button>
                                 )}
                             </td>
                         </tr>
